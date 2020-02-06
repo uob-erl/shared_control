@@ -1,0 +1,3 @@
+<launch>
+    <node pkg="loa_vfh" type="vfh_node" name="vfh_node" output="screen"/>
+</launch>
