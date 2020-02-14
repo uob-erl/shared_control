@@ -1545,7 +1545,7 @@ nh_(nh), nh_private_(nh_private)
   odom_subscriber_ = nh_.subscribe(
       odom_topic_, 1, &VFH_node::odomCallback, this);
   // cmd_vel publisher
-  vel_publisher_= nh_.advertise<geometry_msgs::Twist>("cmd_vel",5);
+  vel_publisher_= nh_.advertise<geometry_msgs::Twist>("/vfh/cmd_vel",5);
 
 }
 
