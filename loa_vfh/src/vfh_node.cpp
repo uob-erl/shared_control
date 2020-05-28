@@ -63,7 +63,7 @@ public:
     //  - goal_distance  in mm.
     //  - goal_distance_tolerance in mm.
     //
-    int Update_VFH( double laser_ranges[361][2],
+    int Update_VFH( double laser_ranges[721][2],
                     int current_speed,
                     float goal_direction,
                     float goal_distance,
@@ -107,9 +107,9 @@ private:
     bool Cant_Turn_To_Goal();
 
     // Returns 0 if something got inside the safety distance, else 1.
-    int Calculate_Cells_Mag( double laser_ranges[361][2], int speed );
+    int Calculate_Cells_Mag( double laser_ranges[721][2], int speed );
     // Returns 0 if something got inside the safety distance, else 1.
-    int Build_Primary_Polar_Histogram( double laser_ranges[361][2], int speed );
+    int Build_Primary_Polar_Histogram( double laser_ranges[721][2], int speed );
     int Build_Binary_Polar_Histogram(int speed);
     int Build_Masked_Polar_Histogram(int speed);
     int Select_Candidate_Angle();
@@ -470,7 +470,7 @@ int VFH_Algorithm::Init()
         // enlarged for this cell, at this speed
         if (Cell_Dist[x][y] > 0)
         {
-          r = ROBOT_RADIUS + Get_Safety_Dist(max_speed_this_table);
+          r = ROBOT_RADIUS  + ROBOT_RADIUS*0.2 +Get_Safety_Dist(max_speed_this_table);
           // Cell_Enlarge[x][y] = (float)atan( r / Cell_Dist[x][y] ) * (180/M_PI);
           Cell_Enlarge[x][y] = (float)asin( r / Cell_Dist[x][y] ) * (180/M_PI);
         }
@@ -625,7 +625,7 @@ int VFH_Algorithm::VFH_Allocate()
  * @param chosen_turnrate the chosen turn rathe to drive the robot
  * @return 1
  */
-int VFH_Algorithm::Update_VFH( double laser_ranges[361][2],
+int VFH_Algorithm::Update_VFH( double laser_ranges[721][2],
                                int current_speed,
                                float goal_direction,
                                float goal_distance,
@@ -1132,7 +1132,7 @@ void VFH_Algorithm::Print_Hist()
  * @param speed robot speed
  * @return 1
  */
-int VFH_Algorithm::Calculate_Cells_Mag( double laser_ranges[361][2], int speed )
+int VFH_Algorithm::Calculate_Cells_Mag( double laser_ranges[721][2], int speed )
 {
   int x, y;
 
@@ -1203,7 +1203,7 @@ int VFH_Algorithm::Calculate_Cells_Mag( double laser_ranges[361][2], int speed )
  * @param speed robot speed
  * @return 1
  */
-int VFH_Algorithm::Build_Primary_Polar_Histogram( double laser_ranges[361][2], int speed )
+int VFH_Algorithm::Build_Primary_Polar_Histogram( double laser_ranges[721][2], int speed )
 {
   int x, y;
   unsigned int i;
@@ -1450,7 +1450,7 @@ private:
 
   double m_robot_radius;
   double m_robotVel;
-    double m_laser_ranges[361][2];
+    double m_laser_ranges[721][2];
 
   int chosen_speed,chosen_turnrate;
 
@@ -1485,7 +1485,7 @@ nh_(nh), nh_private_(nh_private)
     m_safety_dist_1ms = 100; 				// mm, double, safe distance at 1 m/s
 
   if (!nh_private_.getParam ("m_max_speed", m_max_speed))
-    m_max_speed= 1000; //200 originally, should be 1000   // mm/sec, int, max speed
+    m_max_speed= 200; //200 originally, should be 1000   // mm/sec, int, max speed
 
   if (!nh_private_.getParam ("m_max_speed_narrow_opening", m_max_speed_narrow_opening))
     m_max_speed_narrow_opening= 200; 		// mm/sec, int, max speed in the narrow opening
@@ -1526,7 +1526,7 @@ nh_(nh), nh_private_(nh_private)
     m_weight_current_dir = 1.0;				//double, weight current direction
 
   if (!nh_private_.getParam ("m_robot_radius", m_robot_radius))
-    m_robot_radius = 300.0;					// robot radius in mm
+    m_robot_radius = 400.0;					// robot radius in mm
 
   m_vfh = new VFH_Algorithm(m_cell_size, m_window_diameter, m_sector_angle,
       m_safety_dist_0ms, m_safety_dist_1ms, m_max_speed,
@@ -1571,7 +1571,7 @@ void VFH_node::scanCallback (const sensor_msgs::LaserScan::ConstPtr& scan_msg)
   ROS_DEBUG("scanCallback(): received scan, ranges %d",scan_msg->ranges.size());
 
   unsigned int n = scan_msg->ranges.size();
-  for (unsigned i = 0; i < 361; i++)
+  for (unsigned i = 0; i < 721; i++)
     m_laser_ranges[i][0] = -1;
 
   int step=1;

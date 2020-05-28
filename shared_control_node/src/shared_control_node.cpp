@@ -32,7 +32,7 @@ public:
 
 Shared_Control::Shared_Control()
 {
-  teleop_sub_ = nh_.subscribe("/teleop/cmd_vel", 5, &Shared_Control::teleCallback,this); //subscriber to controller commands
+  teleop_sub_ = nh_.subscribe("/delayed_teleop/cmd_vel", 5, &Shared_Control::teleCallback,this); //subscriber to controller commands
   vfh_sub_ = nh_.subscribe("/vfh/cmd_vel", 5, &Shared_Control::vfhCallback, this); //subscriber to VFH+ output
   shared_cmd_ = nh_.advertise<geometry_msgs::Twist>("/shared_control/cmd_vel", 5);
   timer = nh_.createTimer(ros::Duration(0.1), &Shared_Control::operationCallback, this);
@@ -65,6 +65,8 @@ void Shared_Control::operationCallback(const ros::TimerEvent&)
  We care about the angural x input mostly and ignore the linear x at the moment
 This CallBack can be modified freely for more optimized input blending.*/
 {
+//  float alpha = 0.8;
+
   if (tele.linear.x == 0 & tele.angular.z == 0){
     /*
      * This is just so VFH+ doesn't move the robot, if the operator is not touching the stick at all
@@ -80,13 +82,15 @@ This CallBack can be modified freely for more optimized input blending.*/
   else
   {
 
+  float alpha = 0.5;
+
   cmd_vel.linear.x = tele.linear.x /*+ vfh.linear.x*/;
   cmd_vel.linear.y = tele.linear.y + vfh.linear.y;
   cmd_vel.linear.z = tele.linear.z + vfh.linear.z;
 
   cmd_vel.angular.x = tele.angular.x + vfh.angular.x;
   cmd_vel.angular.y = tele.angular.y + vfh.angular.y;
-  cmd_vel.angular.z = tele.angular.z - vfh.angular.z;
+  cmd_vel.angular.z = alpha * tele.angular.z - (1- alpha)*vfh.angular.z;
 
   /*
    * The reason there is a '-' here is because VFH+ outputs
