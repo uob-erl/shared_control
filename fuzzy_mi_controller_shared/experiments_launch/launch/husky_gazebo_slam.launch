@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+
+<launch>
+
+  <!-- parameters for the husky packages e.g. for husky description -->
+  <arg name="laser_enabled" default="true"/>
+  <arg name="kinect_enabled" default="true"/>
+  <arg name="urdf_extras" default=""/>
+
+  <!-- gazebo world/arena -->
+  <arg name="world_name" default="$(find experiments_launch)/world/training_arena.world"/>
+
+  <!-- spawning coordinates in gazebo fom mi arena-->
+  <!-- <arg name="x" default="9.04"/>
+  <arg name="y" default="-6.99"/>
+  <arg name="z" default="0"/>
+  <arg name="yaw" default="3.14"/> -->
+
+  <!-- spawning coordinates in gazebo from training arena-->
+  <arg name="x" default="10.3"/>
+  <arg name="y" default="3.3"/>
+  <arg name="z" default="0"/>
+  <arg name="yaw" default="3.14"/>
+
+  <!-- launching gazebo stuff -->
+  <include file="$(find experiments_launch)/launch/gazebo_world.launch">
+    <arg name="world_name" value="$(arg world_name)"/>
+  </include>
+
+  <include file="$(find husky_gazebo)/launch/spawn_husky.launch">
+    <arg name="laser_enabled" value="$(arg laser_enabled)"/>
+    <arg name="kinect_enabled" value="$(arg kinect_enabled)"/>
+    <arg name="urdf_extras" value="$(arg urdf_extras)"/>
+    <arg name="x" value="$(arg x)"/>
+    <arg name="y" value="$(arg y)"/>
+    <arg name="z" value="$(arg z)"/>
+    <arg name="yaw" value="$(arg yaw)"/>
+  </include>
+
+  <!-- Filter laser scan to remove veiling effect and artifacts -->
+  <!-- <node pkg="laser_filters" type="scan_to_scan_filter_chain" name="laser_filter"> -->
+  <!-- <rosparam command="load" file="$(find experiments_launch)/config/laser_filter.yaml"/> -->
+  <!-- <remap from="/scan_filtered" to="/scan_final" /> -->
+  <!-- </node> -->
+
+  <!-- joy node for joystick input-->
+  <node respawn="true" pkg="joy" type="joy_node" name="joy_node">
+    <param name="dev" type="string" value="/dev/input/js0"/>
+    <param name="deadzone" value="0.15"/>
+  </node>
+
+  <!-- teleoperation node -->
+  <node pkg="mixed_initiative_teleop" type="mixed_initiative_teleop" name="mi_teleop" output="screen">
+    <param name="scale_linear" value="0.5"/>
+    <param name="scale_angular" value="0.8"/>
+  </node>
+
+  <!-- cmd mixer for choosing autonomy mode or e.g. emergency stop if nav doesnt work good. (buttons for teleoperation - stop - autonomy mode) -->
+  <!-- In xbox controller Y = teleop , A = auto , LB = stop (in any case) -->
+  <node pkg="variable_autonomy" type="control_mixer_node" name="control_mixer" output="screen">
+    <remap from="/cmd_vel" to="/husky_velocity_controller/cmd_vel"/>
+  </node>
+
+  <!-- SLAM -->
+  <include file="$(find husky_navigation)/launch/gmapping.launch"/>
+  <!-- <include file="$(find experiments_launch)/launch/slam_hector.launch"/> -->
+
+  <!--- Run Move Base -->
+  <include file="$(find husky_navigation)/launch/move_base.launch"/>
+
+  <!-- mode and status visualising node -->
+  <node pkg="status_publisher" type="status_publisher" name="status_publisher" output="screen"/>
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find experiments_launch)/rviz_cfg/rviz_husky.rviz"/>
+
+</launch>
