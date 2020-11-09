@@ -15,12 +15,12 @@ This repository holds packages that impliment a Husky simulation in a disaster a
 
     **CORRECT**
     
-    ``$ ls ~/'your_workspace'/src/``
+    $ ls ~/'your_workspace'/src/
     >>CMakeLists.txt shared_control fuzzy_mi_controller
  
      AND
-    
-    ``$ ls ~/'your_workspace'/src/shared_control/``
+  
+    $ ls ~/'your_workspace'/src/shared_control/
     >>delay_node  LICENSE  loa_vfh  README.md  shared_control_node
     
     
@@ -28,43 +28,32 @@ This repository holds packages that impliment a Husky simulation in a disaster a
     
     **NOT CORRECT** 
     
-    ```
     $ ls ~/'your_workspace'/src/
-    
     >>CMakeLists.txt shared_control 
-    ```
     
     AND
     
-    ```
-    $ ls ~/'your_workspace'/src/shared_control/
-    
+    ls ~/'your_workspace'/src/shared_control/
     >>delay_node           LICENSE  README.md
     fuzzy_mi_controller  loa_vfh  shared_control_node
-    ```
+    
 
 ### 3. Add navigation stack to 'src' directory
 
-    ```
     $ git clone https://github.com/ros-planning/navigation.git
     $ cd navigation
     $ git checkout origin/kinetic-devel
-    ```
-    
+        
 ### 4. Add husky drivers to 'src' directory
 
-    ```
     $ git clone https://github.com/uob-erl/husky.git
     $ cd husky
     $ git checkout origin/learning_effect_exp
-    ```
 
 ### 5. Add the 'variable_autonomy_utilities' package to 'src' directory
 
-    ```
     $ git clone https://github.com/uob-erl/variable_autonomy_utilities.git
-    ```
-    
+       
 ### 6. Installing ROS dependencies
 
 Most ROS dependancies should be taken care of by ``rosdep install --from-paths src --ignore-src -r -y`` from your catkin workspace. If not:
