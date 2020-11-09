@@ -15,21 +15,15 @@ This repository holds packages that impliment a Husky simulation in a disaster a
 
     **CORRECT**
     
-    ```
-    $ ls ~/'your_workspace'/src/
-    
-
+    ``$ ls ~/'your_workspace'/src/``
     >>CMakeLists.txt shared_control fuzzy_mi_controller
-    ```
+ 
+     AND
     
-    AND
-    
-    ```
-    $ ls ~/'your_workspace'/src/shared_control/
-
+    ``$ ls ~/'your_workspace'/src/shared_control/``
     >>delay_node  LICENSE  loa_vfh  README.md  shared_control_node
     
-    ```
+    
     
     
     **NOT CORRECT** 
