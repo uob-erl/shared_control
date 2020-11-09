@@ -63,7 +63,7 @@ This repository holds packages that impliment a Husky simulation in a disaster a
     ```
     $ git clone https://github.com/uob-erl/variable_autonomy_utilities.git
     ```
-###6. Installing ROS dependencies
+##6. Installing ROS dependencies
 
 Most ROS dependancies should be taken care of by ``rosdep install --from-paths src --ignore-src -r -y`` from your catkin workspace. If not:
 
@@ -77,7 +77,7 @@ sudo apt-get install ros-kinetic-hector-slam
 sudo apt-get install ros-kinetic-p2os-urdf
 ```
 
-###7. Installing fuzzylite 6 cpp library dependency
+##7. Installing fuzzylite 6 cpp library dependency
 
    For the controller to compile and run, the fuzzylite library is needed. The controller uses version 6 of fuzzylite. Please use the instructions below to           install fuzzylite 6.
    
