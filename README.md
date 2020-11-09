@@ -112,10 +112,8 @@ This should give you Gazebo v.7.16.0
 
 ### 9. Build with:
 
-    ```
     $ catkin_make
-    ```
-
+   
 ### 10. Run the simulation with 
 
     $ roslaunch experiments_launch husky_gazebo_mi_training.launch
