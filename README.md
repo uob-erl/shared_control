@@ -13,12 +13,12 @@ This repository holds packages that impliment a Husky simulation in a disaster a
 ### 2. **IMPORTANT**
     Make sure that the 'fuzzy_mi_controller' directory is NOT inside the 'shared_control' directory.
 
-    **CORRECT**
+   **CORRECT**
     
     $ ls ~/'your_workspace'/src/
     >>CMakeLists.txt shared_control fuzzy_mi_controller
  
-     AND
+   AND
   
     $ ls ~/'your_workspace'/src/shared_control/
     >>delay_node  LICENSE  loa_vfh  README.md  shared_control_node
@@ -26,12 +26,12 @@ This repository holds packages that impliment a Husky simulation in a disaster a
     
     
     
-    **NOT CORRECT** 
+   **NOT CORRECT** 
     
     $ ls ~/'your_workspace'/src/
     >>CMakeLists.txt shared_control 
     
-    AND
+   AND
     
     ls ~/'your_workspace'/src/shared_control/
     >>delay_node           LICENSE  README.md
