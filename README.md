@@ -118,15 +118,12 @@ This should give you Gazebo v.7.16.0
 
 ### 10. Run the simulation with 
 
-    ```
     $ roslaunch experiments_launch husky_gazebo_mi_training.launch
-    ```
     
-    or 
-    
-    ```
+   or 
+  
     $ roslaunch experiments_launch husky_gazebo_mi_experiment.launch
-    ```
+    
  
   
   
