@@ -14,27 +14,34 @@ This repository holds packages that impliment a Husky simulation in a disaster a
     Make sure that the 'fuzzy_mi_controller' directory is NOT inside the 'shared_control' directory.
 
     **CORRECT**
+    
     ```
     $ ls ~/'your_workspace'/src/
     
 
     >>CMakeLists.txt shared_control fuzzy_mi_controller
     ```
+    
     AND
+    
     ```
     $ ls ~/'your_workspace'/src/shared_control/
 
     >>delay_node  LICENSE  loa_vfh  README.md  shared_control_node
+    
     ```
     
     
     **NOT CORRECT** 
+    
     ```
     $ ls ~/'your_workspace'/src/
     
     >>CMakeLists.txt shared_control 
     ```
+    
     AND
+    
     ```
     $ ls ~/'your_workspace'/src/shared_control/
     
@@ -63,6 +70,7 @@ This repository holds packages that impliment a Husky simulation in a disaster a
     ```
     $ git clone https://github.com/uob-erl/variable_autonomy_utilities.git
     ```
+    
 ### 6. Installing ROS dependencies
 
 Most ROS dependancies should be taken care of by ``rosdep install --from-paths src --ignore-src -r -y`` from your catkin workspace. If not:
@@ -90,12 +98,14 @@ sudo apt-get install checkinstall
 cd release
 sudo checkinstall --pkgname=fuzzylite6
 ```
+
 Alternatively:
 
 ```
 cd release
 sudo make install
 ```
+
 In order to unistall, if make install was used, ``cat install_manifest.txt | xargs echo sudo rm | sh``.
    
    4. The library is installed.
@@ -128,7 +138,9 @@ This should give you Gazebo v.7.16.0
     ```
     $ roslaunch experiments_launch husky_gazebo_mi_training.launch
     ```
+    
     or 
+    
     ```
     $ roslaunch experiments_launch husky_gazebo_mi_experiment.launch
     ```
