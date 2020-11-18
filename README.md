@@ -1,3 +1,7 @@
+#Paper regarding this repository
+
+https://arxiv.org/abs/2011.05228
+
 # shared_control
 These are ERL's shared control packages
 
