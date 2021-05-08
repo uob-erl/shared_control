@@ -17,7 +17,7 @@ class delayer:
         self.pub.publish(msg)
 
     def callback(self, msg):
-        timer = rospy.Timer(rospy.Duration(0.5), functools.partial(
+        timer = rospy.Timer(rospy.Duration(0.05), functools.partial(
             self.delayed_callback, msg), oneshot=True)
 
 if __name__ == '__main__':
