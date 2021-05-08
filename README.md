@@ -103,29 +103,22 @@ This should give you Gazebo v.7.16.0
  ### 11. If for some reason everything runs but you can not control the robot; go to src/fuzzy_mi_controller/experiments_launch/launch/husky_gazebo_mi_experiment.launch file and try out different js[number]
  
  Example: 
- <!-- joy node for operator's joystick input-->
-  <node respawn="true" pkg="joy" type="joy_node" name="joy_node">
-    <param name="dev" type="string" value="/dev/input/js0"/>
-    <param name="deadzone" value="0.15"/>
-  </node>
-  <!-- joy node for experimenter's joystick-->
-  <node respawn="true" pkg="joy" type="joy_node" name="joy_experimenter_node">
-    <!-- second joystick for experimenter logging -->
-    <param name="dev" type="string" value="/dev/input/js1"/>
-    <remap from="/joy" to="/joy_experimenter"/>
+ 
+  node respawn="true" pkg="joy" type="joy_node" name="joy_node"
+    param name="dev" type="string" value="/dev/input/js0"
+    param name="deadzone" value="0.15"
+  ....
+    param name="dev" type="string" value="/dev/input/js1"
+    remap from="/joy" to="/joy_experimenter"
    
    OR 
    
-   <!-- joy node for operator's joystick input-->
-  <node respawn="true" pkg="joy" type="joy_node" name="joy_node">
-    <param name="dev" type="string" value="/dev/input/js1"/>
-    <param name="deadzone" value="0.15"/>
-  </node>
-  <!-- joy node for experimenter's joystick-->
-  <node respawn="true" pkg="joy" type="joy_node" name="joy_experimenter_node">
-    <!-- second joystick for experimenter logging -->
-    <param name="dev" type="string" value="/dev/input/js2"/>
-    <remap from="/joy" to="/joy_experimenter"/>
+  node respawn="true" pkg="joy" type="joy_node" name="joy_node"
+    param name="dev" type="string" value="/dev/input/js1"
+    param name="deadzone" value="0.15"
+  ....
+    param name="dev" type="string" value="/dev/input/js2"
+    remap from="/joy" to="/joy_experimenter"
  
   
   
