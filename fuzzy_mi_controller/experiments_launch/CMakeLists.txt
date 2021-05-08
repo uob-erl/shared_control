@@ -6,7 +6,7 @@ project(experiments_launch)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   gmapping
-  loa_vfh
+  teleop_loa
   move_base
 )
 
@@ -27,7 +27,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES experiments_launch
-  CATKIN_DEPENDS gmapping mixed_initiative_controller loa_vfh move_base
+  CATKIN_DEPENDS gmapping mixed_initiative_controller teleop_loa move_base
   #  DEPENDS system_lib
   )
 
