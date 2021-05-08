@@ -34,11 +34,11 @@
   <!--   <test_depend>gtest</test_depend> -->
   <buildtool_depend>catkin</buildtool_depend>
   <build_depend>gmapping</build_depend>
-  <build_depend>teleop_loa</build_depend>
+  <build_depend>loa_vfh</build_depend>
   <build_depend>move_base</build_depend>
   <run_depend>gmapping</run_depend>
   <run_depend>mixed_initiative_controller</run_depend>
-  <run_depend>teleop_loa</run_depend>
+  <run_depend>loa_vfh</run_depend>
   <run_depend>move_base</run_depend>
 
 
