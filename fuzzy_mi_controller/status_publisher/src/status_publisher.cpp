@@ -5,6 +5,7 @@
 #include <cv_bridge/cv_bridge.h>
 #include <sensor_msgs/image_encodings.h>
 #include <std_msgs/Int8.h>
+#include "std_msgs/String.h"
 #include <actionlib_msgs/GoalStatusArray.h>
 #include <actionlib_msgs/GoalStatus.h>
 #include <move_base_msgs/MoveBaseActionResult.h>
@@ -36,7 +37,7 @@ sensor_msgs::Image rosImgAuto_, rosImgTeleop_, rosImgStop_, rosImgCanceled_;
      // ROS msg images
 sensor_msgs::Image rosImgActive_, rosImgSucceeded_, rosImgAborted_;
 
-void loaCallBack(const std_msgs::Int8::ConstPtr& loa);
+void loaCallBack(const std_msgs::String::ConstPtr& loa);
 void nav_statusCallBack(const actionlib_msgs::GoalStatusArray::ConstPtr& nav_status);
 void nav_resultCallBack(const move_base_msgs::MoveBaseActionResult::ConstPtr& nav_result);
 void timerPubStatusCallback(const ros::TimerEvent&);
@@ -54,7 +55,7 @@ StatusPublisher::StatusPublisher() : it_(nh_)
         nav_result_ = -1;
 
         // Subscribers
-        loa_sub_ = nh_.subscribe<std_msgs::Int8>("/loa", 1, &StatusPublisher::loaCallBack, this);
+        loa_sub_ = nh_.subscribe<std_msgs::String>("/loa", 1, &StatusPublisher::loaCallBack, this);
         nav_status_sub_  = nh_.subscribe<actionlib_msgs::GoalStatusArray>("/move_base/status", 1,
                                                                           &StatusPublisher::nav_statusCallBack, this);
         nav_result_sub_ = nh_.subscribe<move_base_msgs::MoveBaseActionResult>("/move_base/result", 1,
@@ -65,7 +66,7 @@ StatusPublisher::StatusPublisher() : it_(nh_)
         nav_status_pub_ = it_.advertise("/robot_status/nav",1, true);
         timerPubStatus_ = nh_.createTimer(ros::Duration(0.100), &StatusPublisher::timerPubStatusCallback, this);
 
-        // Path where the images are
+        // Path where the images areTeleoperation
         pathTeleop_ = ros::package::getPath("status_publisher");
         pathTeleop_.append("/images/teleop.png");
 
@@ -157,13 +158,13 @@ StatusPublisher::StatusPublisher() : it_(nh_)
 
 
 // takes care of loa publising in rviz
-void StatusPublisher::loaCallBack(const std_msgs::Int8::ConstPtr& mode)
+void StatusPublisher::loaCallBack(const std_msgs::String::ConstPtr& mode)
 {
-        if (mode->data == 0)
+        if (mode->data == "Stop")
                 loa_pub_.publish(rosImgStop_);
-        if (mode->data == 1)
+        if (mode->data == "Teleoperation")
                 loa_pub_.publish(rosImgTeleop_);
-        if (mode->data == 2)
+        if (mode->data == "Autonomy")
                 loa_pub_.publish(rosImgAuto_);
 
 }
