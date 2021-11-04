@@ -1,7 +1,9 @@
 # Paper regarding this repository
 
+If you use any of this code please cite our paper "VFH+ based shared control for remotely operated mobile robots". You can find it in IEEE explore link and arxiv link.
+
 IEEE Xplore: https://ieeexplore.ieee.org/document/9292585
-Pre-print version: https://arxiv.org/abs/2011.05228
+Arxiv version: https://arxiv.org/abs/2011.05228
 
 # shared_control
 These are ERL's shared control packages
