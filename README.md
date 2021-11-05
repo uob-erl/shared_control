@@ -2,8 +2,12 @@
 
 If you use any of this code please cite our paper "VFH+ based shared control for remotely operated mobile robots". You can find it in IEEE explore link and arxiv link.
 
-IEEE Xplore: https://ieeexplore.ieee.org/document/9292585
-Arxiv version: https://arxiv.org/abs/2011.05228
+P. Pappas, M. Chiou, G. -T. Epsimos, G. Nikolaou and R. Stolkin, "VFH+ based shared control for remotely operated mobile robots," 2020 IEEE International Symposium on Safety, Security, and Rescue Robotics (SSRR), 2020, pp. 366-373, doi: 10.1109/SSRR50563.2020.9292585. https://ieeexplore.ieee.org/document/9292585
+
+or
+
+PAPPAS, Pantelis, et al. VFH+ based shared control for remotely operated mobile robots. arXiv e-prints, 2020, arXiv: 2011.05228. https://arxiv.org/abs/2011.05228
+
 
 # shared_control
 These are ERL's shared control packages
