@@ -39,13 +39,13 @@
 
   <!-- joy node for operator's joystick input-->
   <node respawn="true" pkg="joy" type="joy_node" name="joy_node">
-    <param name="dev" type="string" value="/dev/input/js2"/>
+    <param name="dev" type="string" value="/dev/input/js1"/>
     <param name="deadzone" value="0.15"/>
   </node>
   <!-- joy node for experimenter's joystick-->
   <node respawn="true" pkg="joy" type="joy_node" name="joy_experimenter_node">
     <!-- second joystick for experimenter logging -->
-    <param name="dev" type="string" value="/dev/input/js3"/>
+    <param name="dev" type="string" value="/dev/input/js2"/>
     <remap from="/joy" to="/joy_experimenter"/>
   </node>
 
