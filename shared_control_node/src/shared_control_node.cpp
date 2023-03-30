@@ -5,6 +5,8 @@ for a more optimized input blending. For simple testing though, it should work j
 */
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
+#include <std_msgs/Float32.h>
+
 
 
 class Shared_Control
@@ -13,6 +15,7 @@ private:
     ros::NodeHandle nh_;
     ros::Subscriber teleop_sub_;
     ros::Subscriber vfh_sub_;
+    ros::Subscriber alpha_sub_;
     ros::Publisher shared_cmd_;
     ros::Timer timer;
 
@@ -21,6 +24,8 @@ private:
     geometry_msgs::Twist vfh;
     geometry_msgs::Twist cmd_vel;
 
+    float alpha;
+
 
 
 public:
@@ -28,14 +33,20 @@ public:
     void teleCallback(const geometry_msgs::Twist::ConstPtr& tele);
     void vfhCallback(const geometry_msgs::Twist::ConstPtr& vfh);
     void operationCallback(const ros::TimerEvent&);
+    void alphaCallback(const std_msgs::Float32::ConstPtr& msg);
 };
 
 Shared_Control::Shared_Control()
 {
   teleop_sub_ = nh_.subscribe("/delayed_teleop/cmd_vel", 5, &Shared_Control::teleCallback,this); //subscriber to controller commands
   vfh_sub_ = nh_.subscribe("/vfh/cmd_vel", 5, &Shared_Control::vfhCallback, this); //subscriber to VFH+ output
+  alpha_sub_ = nh_.subscribe("/alpha_arb", 5, &Shared_Control::alphaCallback, this); //subscriber to arbitrator alpha
   shared_cmd_ = nh_.advertise<geometry_msgs::Twist>("/shared_control/cmd_vel", 5);
   timer = nh_.createTimer(ros::Duration(0.1), &Shared_Control::operationCallback, this);
+}
+
+void Shared_Control::alphaCallback(const std_msgs::Float32::ConstPtr& msg){
+  alpha = msg->data;
 }
 
 void Shared_Control::teleCallback(const geometry_msgs::Twist::ConstPtr& msg)
@@ -82,7 +93,7 @@ This CallBack can be modified freely for more optimized input blending.*/
   else
   {
 
-  float alpha = 0.5;
+  // float alpha = 0.5;
 
   cmd_vel.linear.x = tele.linear.x /*+ vfh.linear.x*/;
   cmd_vel.linear.y = tele.linear.y + vfh.linear.y;
@@ -91,6 +102,7 @@ This CallBack can be modified freely for more optimized input blending.*/
   cmd_vel.angular.x = tele.angular.x + vfh.angular.x;
   cmd_vel.angular.y = tele.angular.y + vfh.angular.y;
   cmd_vel.angular.z = alpha * tele.angular.z - (1- alpha)*vfh.angular.z;
+  ROS_INFO("Confidence ALPHA %lf", alpha);
 
   /*
    * The reason there is a '-' here is because VFH+ outputs

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<launch>
+
+<node pkg="adaptive_alpha_node" type="adaptive_alpha_node.py" name="adaptive_alpha_node" output="screen"/>
+
+</launch>
